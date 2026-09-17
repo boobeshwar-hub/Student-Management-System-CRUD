@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System | Full-Stack CRUD</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-brand">
+                <h1>Student Management System</h1>
+                <p class="subtitle">Complete CRUD Web Application (Flask & JSON Storage)</p>
+            </div>
+            <div class="stats-card">
+                <span class="stats-label">Total Records</span>
+                <span id="totalStudentsCount" class="stats-value">0</span>
+            </div>
+        </header>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden"></div>
+
+        <!-- Main Content Area -->
+        <main class="main-grid">
+            <!-- Form Section: Create Student -->
+            <section class="card form-card">
+                <h2>Add New Student</h2>
+                <form id="studentForm" novalidate>
+                    <div class="form-group">
+                        <label for="rollNumber">Roll Number *</label>
+                        <input type="text" id="rollNumber" placeholder="e.g., 21CS101" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" placeholder="e.g., John Doe" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" placeholder="e.g., john@example.com" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="department">Department *</label>
+                            <select id="department" required>
+                                <option value="">Select Dept</option>
+                                <option value="CSE">CSE</option>
+                                <option value="IT">IT</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="yearOfStudy">Year *</label>
+                            <select id="yearOfStudy" required>
+                                <option value="">Select Year</option>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gpa">GPA (0-10)</label>
+                            <input type="number" id="gpa" step="0.01" min="0" max="10" placeholder="8.50">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Save Student</button>
+                </form>
+            </section>
+
+            <!-- Table Section: Read, Search, Update, Delete -->
+            <section class="card table-card">
+                <div class="table-toolbar">
+                    <h2>Enrolled Students</h2>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by name, roll no, dept...">
+                        <button type="button" id="refreshBtn" class="btn btn-secondary">Refresh</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Roll No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Dept</th>
+                                <th>Year</th>
+                                <th>GPA</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center">Loading student records...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <!-- Edit Modal Dialog -->
+        <div id="editModal" class="modal hidden">
+            <div class="modal-content card">
+                <div class="modal-header">
+                    <h3>Edit Student Record</h3>
+                    <button type="button" class="close-btn" id="closeModalBtn">&times;</button>
+                </div>
+                <form id="editForm" novalidate>
+                    <input type="hidden" id="editStudentId">
+
+                    <div class="form-group">
+                        <label for="editRollNumber">Roll Number *</label>
+                        <input type="text" id="editRollNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editName">Full Name *</label>
+                        <input type="text" id="editName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editEmail">Email Address *</label>
+                        <input type="email" id="editEmail" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDepartment">Department *</label>
+                            <select id="editDepartment" required>
+                                <option value="CSE">CSE</option>
+                                <option value="IT">IT</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editYearOfStudy">Year *</label>
+                            <select id="editYearOfStudy" required>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editGpa">GPA (0-10)</label>
+                            <input type="number" id="editGpa" step="0.01" min="0" max="10">
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

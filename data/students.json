@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "roll_number": "922525104015",
+    "name": "BOOBESHWAR S",
+    "email": "boobeshyt99@gmail.com",
+    "department": "CSE",
+    "year_of_study": 2,
+    "gpa": 10.0,
+    "created_at": "2026-09-17 10:00:00"
+  },
+  {
+    "id": 2,
+    "roll_number": "922525104019",
+    "name": "DAYANIDHI O R",
+    "email": "ordayanithi@gmail.com",
+    "department": "CSE",
+    "year_of_study": 2,
+    "gpa": 9.6,
+    "created_at": "2026-09-17 10:15:00"
+  },
+  {
+    "id": 3,
+    "roll_number": "922525104053",
+    "name": "HARISH G S",
+    "email": "harishgs@gmail.com",
+    "department": "CSE",
+    "year_of_study": 2,
+    "gpa": 9.8,
+    "created_at": "2026-09-17 10:30:00"
+  }
+]
